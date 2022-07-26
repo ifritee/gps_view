@@ -1,0 +1,48 @@
+#include <gps.h>
+#include <iostream>
+#include <unistd.h>
+#include <math.h>
+
+/*
+ * # Переключение устройства в режим NMEA (не всегда нужно)
+ * sudo gpsctl -f -n /dev/ttyUSB0
+ * # Установка скорости RS-232 в 4800
+ * sudo stty -F /dev/ttyUSB0 4800
+ * # Запуск демона на порту 2948, в отладочном режиме
+ * sudo /usr/sbin/gpsd -N -n -S 2948 /dev/ttyUSB0
+*/
+
+using namespace std;
+
+int main()
+{
+  struct gps_data_t gps_data; // Данные от GPS
+  if ((gps_open("localhost", "2948", &gps_data)) == -1) {
+    printf("code: %d, reason: %s\n", errno, gps_errstr(errno));
+    return EXIT_FAILURE;
+  }
+  gps_stream(&gps_data, WATCH_ENABLE | WATCH_JSON, NULL);
+
+  for(int i=0; i < 10; ++i) {
+    if (gps_waiting (&gps_data, 2000000)) {
+      /* read data */
+      if ((gps_read(&gps_data,NULL,0)) == -1) {
+        printf("error occured reading gps data. code: %d, reason: %s\n", errno, gps_errstr(errno));
+      } else {
+        /* Display data from the GPS receiver. */
+        if ((gps_data.status == STATUS_FIX) && (gps_data.fix.mode == MODE_2D || gps_data.fix.mode == MODE_3D)
+            && !isnan(gps_data.fix.latitude) && !isnan(gps_data.fix.longitude)) {
+          cout<<"latitude: "<<gps_data.fix.latitude<<" longitude: "<<gps_data.fix.longitude<<endl<<" time: "<<gps_data.fix.time.tv_sec;
+//printf("latitude: %f, longitude: %f, speed: %f, timestamp: %lu\n", gps_data.fix.latitude, gps_data.fix.longitude, gps_data.fix.speed, gps_data.fix.time.tv_sec);
+        } else {
+            cerr<<"no GPS data available"<<endl;
+        }
+      }
+    }
+    sleep(3);
+  }
+  /* When you are done... */
+  gps_stream(&gps_data, WATCH_DISABLE, NULL);
+  gps_close (&gps_data);
+  return 0;
+}
