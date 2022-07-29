@@ -6,6 +6,7 @@
 #include <QDebug>
 
 #include "UParser.h"
+#include "DSettings.h"
 #include "ui_MainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -13,13 +14,17 @@ MainWindow::MainWindow(QWidget *parent)
   , ui(new Ui::MainWindow)
   , _Timer_po(new QTimer(this))
   , _SerialPort_po(new QSerialPort)
+  , _Settings_po(new DSettings(this))
 {
   ui->setupUi(this);
 
-  connect(ui->refresh_pb, &QPushButton::clicked, this, &MainWindow::RefreshPorts_slt);
   connect(ui->start_pb, &QPushButton::clicked, this, &MainWindow::StartGPS_slt);
   connect(ui->stop_pb, &QPushButton::clicked, this, &MainWindow::StopGPS_slt);
   connect(_SerialPort_po, &QSerialPort::readyRead, this, &MainWindow::ReadNMEA_slt);
+  connect(ui->actionSettings, &QAction::triggered, [this](){ _Settings_po->exec(); });
+  connect(ui->actionSave_settings, &QAction::triggered, _Settings_po, &DSettings::Save_slt);
+  connect(ui->actionLoad_settings, &QAction::triggered, _Settings_po, &DSettings::Load_slt);
+  connect(ui->actionExit, &QAction::triggered, [this](){ qApp->quit();});
 }
 
 MainWindow::~MainWindow()
@@ -28,26 +33,18 @@ MainWindow::~MainWindow()
   delete ui;
   delete _Timer_po;
   delete _SerialPort_po;
-}
-
-void MainWindow::RefreshPorts_slt()
-{
-  ui->avaiblePorts_cb->clear();
-  foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts()) {
-    ui->avaiblePorts_cb->addItem(info.portName());
-    ui->start_pb->setEnabled(true);
-  }
+  delete _Settings_po;
 }
 
 void MainWindow::StartGPS_slt()
 {
-  _SerialPort_po->setPortName(ui->avaiblePorts_cb->currentText());
+  _SerialPort_po->setPortName(_Settings_po->portName());
   if (_SerialPort_po->open(QIODevice::ReadOnly)) {
-    if (_SerialPort_po->setBaudRate(ui->boundRates_cb->currentText().toInt())
-        && _SerialPort_po->setDataBits(QSerialPort::DataBits(ui->dataBits_cb->currentIndex()))
-        && _SerialPort_po->setParity(QSerialPort::Parity(ui->parity_cb->currentIndex() > 0 ? ui->parity_cb->currentIndex() + 1 : 0))
-        && _SerialPort_po->setStopBits(QSerialPort::StopBits(ui->stopBits_cb->currentIndex() + 1))
-        && _SerialPort_po->setFlowControl(QSerialPort::FlowControl(ui->flowControls_cb->currentIndex()))) {
+    if (_SerialPort_po->setBaudRate(_Settings_po->boundRate())
+        && _SerialPort_po->setDataBits(_Settings_po->dataBits())
+        && _SerialPort_po->setParity(_Settings_po->parity())
+        && _SerialPort_po->setStopBits(_Settings_po->stopBits())
+        && _SerialPort_po->setFlowControl(_Settings_po->flowControl())) {
       if (_SerialPort_po->isOpen()){
         qDebug()<<"RS232 port is open!!!";
         ui->stop_pb->setEnabled(true);

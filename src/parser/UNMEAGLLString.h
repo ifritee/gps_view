@@ -51,6 +51,7 @@ private:
   QTime * _UTCTime_po; ///< @brief Time in UTC
   bool _IsReliability_b; ///< @brief Data's is reliability
   ECALCMETHOD _CalcMethod_en; ///< @brief Coordinate calculation method
+
   std::map<QString, ECALCMETHOD> _CalcMethodDict_map; ///< @brief Hash from key = char, val = calc method
 };
 

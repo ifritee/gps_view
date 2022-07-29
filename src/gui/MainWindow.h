@@ -8,6 +8,7 @@ namespace Ui {
 
 class QTimer;
 class QSerialPort;
+class DSettings;
 
 class MainWindow : public QMainWindow
 {
@@ -21,10 +22,10 @@ private:
   Ui::MainWindow *ui;
   QTimer * _Timer_po; ///< @brief Таймер считывания данных
   QSerialPort * _SerialPort_po; ///< @brief RS232 порт
-  QByteArray _ReciveData_o;
+  QByteArray _ReciveData_o; ///< @brief Принятые данные
+  DSettings * _Settings_po; ///< @brief Диалог настроек
 
 private slots:
-  void RefreshPorts_slt();
   void StartGPS_slt();
   void StopGPS_slt();
   void ReadNMEA_slt();

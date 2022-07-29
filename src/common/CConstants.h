@@ -4,6 +4,15 @@
 
 #include <QString>
 
+const constexpr char * SETTINGS_FILENAME = "gps_view.conf";
+const constexpr char * SETTINGS_RS232 = "rs232";
+const constexpr char * SETTINGS_PORTNAME = "portname";
+const constexpr char * SETTINGS_BOUNDRATE = "boundrate";
+const constexpr char * SETTINGS_DATABITS = "databits";
+const constexpr char * SETTINGS_PARITY = "parity";
+const constexpr char * SETTINGS_STOPBITS = "stopbits";
+const constexpr char * SETTINGS_FLOWCONTROL = "flowcontrol";
+
 /**
  * @enum ESATELLITETYPE
  * @brief Тип спутников */

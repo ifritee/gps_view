@@ -6,6 +6,7 @@ CONFIG += console c++17
 SOURCES += \
         src/common/CConstants.cpp \
         src/common/FCalculate.cpp \
+        src/gui/DSettings.cpp \
         src/gui/MainWindow.cpp \
         src/gui/USatelliteItem.cpp \
         src/gui/WSatellitesView.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
 HEADERS += \
   src/common/CConstants.h \
   src/common/FCalculate.h \
+  src/gui/DSettings.h \
   src/gui/MainWindow.h \
   src/gui/USatelliteItem.h \
   src/gui/WSatellitesView.h \
@@ -49,4 +51,5 @@ INCLUDEPATH += \
   src/parser
 
 FORMS += \
+  src/gui/DSettings.ui \
   src/gui/MainWindow.ui
