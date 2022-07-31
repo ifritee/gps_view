@@ -1,5 +1,7 @@
 #include "ANMEAString.h"
 
+#include <QDebug>
+
 #include "UNMEAGGAString.h"
 #include "UNMEAGLLString.h"
 #include "UNMEAGSAString.h"
@@ -38,10 +40,18 @@ ANMEAString *ANMEAString::create(ENMEADATATYPE dataType, ESATELLITETYPE satellit
   else if (dataType == ENMEADATATYPE::TXT) nmea = new UNMEATXTString(satelliteType, text);
 
   if (nmea) { nmea->parsing(); }
+  else {
+    qWarning()<<"NO parser: "<<text;
+  }
   return nmea;
 }
 
 ESATELLITETYPE ANMEAString::satelliteType_en() const
 {
   return _SatelliteType_en;
+}
+
+ENMEADATATYPE ANMEAString::nmeaDataType_en() const
+{
+  return _NMEADataType_en;
 }

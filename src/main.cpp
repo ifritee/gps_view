@@ -3,10 +3,12 @@
 #include <exception>
 
 #include "MainWindow.h"
+#include "CLogRegistration.h"
 
 int main(int argc, char *argv[])
 {
   QApplication application(argc, argv);
+  ows::cLogRegistration(argc, argv);
   int returnCode = 0;
   try {
     MainWindow mainWindow;

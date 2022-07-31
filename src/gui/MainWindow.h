@@ -32,6 +32,10 @@ private:
   QByteArray _ReciveData_o; ///< @brief Recived data
   DSettings * _Settings_po; ///< @brief Settings dialog
 
+protected:
+  /** @brief widget show */
+  void showEvent(QShowEvent * event) override final;
+
 private slots:
   /** @brief Start GPS control */
   void StartGPS_slt();

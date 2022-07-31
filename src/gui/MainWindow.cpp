@@ -18,8 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
   ui->setupUi(this);
 
-  connect(ui->start_pb, &QPushButton::clicked, this, &MainWindow::StartGPS_slt);
-  connect(ui->stop_pb, &QPushButton::clicked, this, &MainWindow::StopGPS_slt);
   connect(_SerialPort_po, &QSerialPort::readyRead, this, &MainWindow::ReadNMEA_slt);
   connect(ui->actionSettings, &QAction::triggered, [this](){ _Settings_po->exec(); });
   connect(ui->actionSave_settings, &QAction::triggered, _Settings_po, &DSettings::Save_slt);
@@ -36,6 +34,14 @@ MainWindow::~MainWindow()
   delete _Settings_po;
 }
 
+void MainWindow::showEvent(QShowEvent *event)
+{
+  QMainWindow::showEvent(event);
+  if (!_SerialPort_po->isOpen()) {
+    StartGPS_slt();
+  }
+}
+
 void MainWindow::StartGPS_slt()
 {
   _SerialPort_po->setPortName(_Settings_po->portName());
@@ -47,7 +53,6 @@ void MainWindow::StartGPS_slt()
         && _SerialPort_po->setFlowControl(_Settings_po->flowControl())) {
       if (_SerialPort_po->isOpen()){
         qDebug()<<"RS232 port is open!!!";
-        ui->stop_pb->setEnabled(true);
       } else {
         qWarning()<<"RS232 port failed open!!!";
         _SerialPort_po->close();
@@ -58,6 +63,7 @@ void MainWindow::StartGPS_slt()
     }
   } else {
     qWarning()<<"RS232 port is not avaible!!!";
+    QTimer::singleShot(1000, this, &MainWindow::StartGPS_slt);
   }
 }
 
@@ -75,7 +81,10 @@ void MainWindow::ReadNMEA_slt()
   if (_ReciveData_o.size() > 2 && _ReciveData_o[_ReciveData_o.size() - 2] == '\r' && _ReciveData_o[_ReciveData_o.size() - 1] == '\n') {
     UParser parser(_ReciveData_o);
     ANMEAString * data = parser.parse();
-    ui->graphicsView->setViewData_v(data);
+    if (data) {
+      ui->graphicsView->setViewData_v(data);
+      ui->generalData->setViewData_v(data);
+    }
     _ReciveData_o.clear();
   }
 }

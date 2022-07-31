@@ -5,10 +5,12 @@ CONFIG += console c++17
 
 SOURCES += \
         src/common/CConstants.cpp \
+        src/common/CLogRegistration.cpp \
         src/common/FCalculate.cpp \
         src/gui/DSettings.cpp \
         src/gui/MainWindow.cpp \
         src/gui/USatelliteItem.cpp \
+        src/gui/WGeneralData.cpp \
         src/gui/WSatellitesView.cpp \
         src/main.cpp \
         src/parser/ANMEAString.cpp \
@@ -26,10 +28,12 @@ SOURCES += \
 
 HEADERS += \
   src/common/CConstants.h \
+  src/common/CLogRegistration.h \
   src/common/FCalculate.h \
   src/gui/DSettings.h \
   src/gui/MainWindow.h \
   src/gui/USatelliteItem.h \
+  src/gui/WGeneralData.h \
   src/gui/WSatellitesView.h \
   src/parser/ANMEAString.h \
   src/parser/UNMEADHVString.h \
@@ -52,4 +56,5 @@ INCLUDEPATH += \
 
 FORMS += \
   src/gui/DSettings.ui \
-  src/gui/MainWindow.ui
+  src/gui/MainWindow.ui \
+  src/gui/WGeneralData.ui

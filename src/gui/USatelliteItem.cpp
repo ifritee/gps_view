@@ -28,8 +28,8 @@ QRectF USatelliteItem::boundingRect() const
 
 void USatelliteItem::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * /*widget*/)
 {
-  painter->setPen(Qt::red);
-  painter->setBrush(Qt::red);
+  painter->setPen(QPen(QBrush(_GSVData_o._SNR_u == 0 ? Qt::white : Qt::transparent), 1));
+  painter->setBrush((_GSVData_o._SNR_u == 0 ? QColor(Qt::transparent) : CConstants::colorBySNR(_GSVData_o._SNR_u)));
   if (_SatelliteType_en == ESATELLITETYPE::GP) { // Если GPS
     painter->drawEllipse(QPointF(0,0), 4, 4);
   }

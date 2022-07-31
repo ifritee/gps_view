@@ -3,6 +3,7 @@
 #include <map>
 
 #include <QString>
+#include <QColor>
 
 const constexpr char * SETTINGS_FILENAME = "gps_view.conf";
 const constexpr char * SETTINGS_RS232 = "rs232";
@@ -73,6 +74,9 @@ public:
    * @param crc Предполагаемая контрольная сумма
    * @return true - совпадение */
   bool isChecksumCorrect(const QByteArray & data, quint32 crc);
+
+  /** @brief Возвращает цвет по С/Ш */
+  static QColor colorBySNR(quint32 snr);
 
 private:
   std::map<QString, ESATELLITETYPE> _SatelliteTypes_map; ///< @brief Набор типов по строкам

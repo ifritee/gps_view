@@ -27,6 +27,8 @@ public:
   static ANMEAString * create(ENMEADATATYPE dataType, ESATELLITETYPE satelliteType, const QString & text);
   /** @brief return satellite type */
   ESATELLITETYPE satelliteType_en() const;
+  /** @brief return NMEA data type */
+  ENMEADATATYPE nmeaDataType_en() const;
 
 protected:
   ENMEADATATYPE _NMEADataType_en; ///< @brief NMEA data

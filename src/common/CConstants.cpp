@@ -67,6 +67,16 @@ bool CConstants::isChecksumCorrect(const QByteArray &data, quint32 crc)
   return xorData == crc;
 }
 
+QColor CConstants::colorBySNR(quint32 snr)
+{
+  QColor color(Qt::green);
+  if (snr > 0 && snr < 10) { color = QColor(Qt::red); }
+  else if (snr >= 10 && snr < 20) { color = QColor(255, 150, 0); }
+  else if (snr >= 20 && snr < 30) { color = QColor(Qt::yellow); }
+  else if (snr >= 30 && snr < 50) { color = QColor(150, 255, 0); }
+  return color;
+}
+
 QDebug operator<<(QDebug debugObject, const SGSVSatellitesData & data)
 {
   debugObject.nospace()

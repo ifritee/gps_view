@@ -29,7 +29,6 @@ ANMEAString * UParser::parse()
     qWarning()<<"Check sum of NMEA data is not correct";
     return nullptr;
   }
-//  qDebug()<<data.split(",");
   _SetelliteType_en = constants.satelliteTypeByString_en(data);
   _NMEADateType_en = constants.NMEATypeByString_en(data);
   _NMEAData_po = ANMEAString::create(_NMEADateType_en, _SetelliteType_en, data);
