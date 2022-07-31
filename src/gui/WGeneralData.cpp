@@ -52,7 +52,7 @@ void WGeneralData::viewGGAData(const UNMEAGGAString & gga)
     ui->time->setText(time.toString("hh:mm:ss"));
   }
   if (gga.coordinates().isValid()) {
-    QStringList list = gga.coordinates().toString(QGeoCoordinate::DegreesMinutesSeconds).split(",");
+    QStringList list = gga.coordinates().toString(QGeoCoordinate::DegreesMinutesSeconds).split(", ");
     if (list.size() == 2) {
       ui->latitude->setText(list[0]);
       ui->longitude->setText(list[1]);

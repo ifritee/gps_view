@@ -7,6 +7,7 @@ SOURCES += \
         src/common/CConstants.cpp \
         src/common/CLogRegistration.cpp \
         src/common/FCalculate.cpp \
+        src/gui/DHelpAbout.cpp \
         src/gui/DSettings.cpp \
         src/gui/MainWindow.cpp \
         src/gui/USatelliteItem.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
   src/common/CConstants.h \
   src/common/CLogRegistration.h \
   src/common/FCalculate.h \
+  src/gui/DHelpAbout.h \
   src/gui/DSettings.h \
   src/gui/MainWindow.h \
   src/gui/USatelliteItem.h \
@@ -55,6 +57,7 @@ INCLUDEPATH += \
   src/parser
 
 FORMS += \
+  src/gui/DHelpAbout.ui \
   src/gui/DSettings.ui \
   src/gui/MainWindow.ui \
   src/gui/WGeneralData.ui

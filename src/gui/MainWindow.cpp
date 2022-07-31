@@ -7,6 +7,7 @@
 
 #include "UParser.h"
 #include "DSettings.h"
+#include "DHelpAbout.h"
 #include "ui_MainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -15,11 +16,13 @@ MainWindow::MainWindow(QWidget *parent)
   , _Timer_po(new QTimer(this))
   , _SerialPort_po(new QSerialPort)
   , _Settings_po(new DSettings(this))
+  , _HelpAbout_po(new DHelpAbout(this))
 {
   ui->setupUi(this);
 
   connect(_SerialPort_po, &QSerialPort::readyRead, this, &MainWindow::ReadNMEA_slt);
   connect(ui->actionSettings, &QAction::triggered, [this](){ _Settings_po->exec(); });
+  connect(ui->actionAbout, &QAction::triggered, [this](){ _HelpAbout_po->exec(); });
   connect(ui->actionSave_settings, &QAction::triggered, _Settings_po, &DSettings::Save_slt);
   connect(ui->actionLoad_settings, &QAction::triggered, _Settings_po, &DSettings::Load_slt);
   connect(ui->actionExit, &QAction::triggered, [this](){ qApp->quit();});
@@ -32,6 +35,7 @@ MainWindow::~MainWindow()
   delete _Timer_po;
   delete _SerialPort_po;
   delete _Settings_po;
+  delete _HelpAbout_po;
 }
 
 void MainWindow::showEvent(QShowEvent *event)

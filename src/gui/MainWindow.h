@@ -9,6 +9,7 @@ namespace Ui {
 class QTimer;
 class QSerialPort;
 class DSettings;
+class DHelpAbout;
 
 /**
  * @class MainWindow
@@ -31,6 +32,7 @@ private:
   QSerialPort * _SerialPort_po; ///< @brief RS232 port
   QByteArray _ReciveData_o; ///< @brief Recived data
   DSettings * _Settings_po; ///< @brief Settings dialog
+  DHelpAbout * _HelpAbout_po; ///< @brief Help window "About..."
 
 protected:
   /** @brief widget show */
