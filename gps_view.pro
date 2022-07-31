@@ -58,3 +58,6 @@ FORMS += \
   src/gui/DSettings.ui \
   src/gui/MainWindow.ui \
   src/gui/WGeneralData.ui
+
+RESOURCES += \
+  res/resources.qrc

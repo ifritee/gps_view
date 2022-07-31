@@ -2,6 +2,7 @@
 
 #include <QTime>
 #include <QTimeZone>
+#include <QGeoCoordinate>
 #include <QDebug>
 
 #include "UNMEAZDAString.h"
@@ -39,6 +40,9 @@ void WGeneralData::viewZDAData(const UNMEAZDAString & zda)
 {
 //  ui->time->setText(zda.utcTime().toString("hh:mm:ss"));
   *_TimeZone_po = QTimeZone(zda.zoneHours() * 3600 + zda.zoneMinuts() * 60);
+  if (zda.date().isValid()) {
+    ui->date->setText(zda.date().toString("dd-MM-yyyy"));
+  }
 }
 
 void WGeneralData::viewGGAData(const UNMEAGGAString & gga)
@@ -46,5 +50,12 @@ void WGeneralData::viewGGAData(const UNMEAGGAString & gga)
   if (gga.utcTime().isValid()) {
     QTime time = gga.utcTime();
     ui->time->setText(time.toString("hh:mm:ss"));
+  }
+  if (gga.coordinates().isValid()) {
+    QStringList list = gga.coordinates().toString(QGeoCoordinate::DegreesMinutesSeconds).split(",");
+    if (list.size() == 2) {
+      ui->latitude->setText(list[0]);
+      ui->longitude->setText(list[1]);
+    }
   }
 }
