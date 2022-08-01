@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>777</width>
-    <height>534</height>
+    <width>685</width>
+    <height>433</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <normaloff>:/icon.png</normaloff>:/icon.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2">
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -38,8 +38,14 @@
      <widget class="QFrame" name="frame">
       <property name="minimumSize">
        <size>
-        <width>192</width>
+        <width>216</width>
         <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>216</width>
+        <height>16777215</height>
        </size>
       </property>
       <property name="frameShape">
@@ -88,7 +94,37 @@
      </widget>
     </item>
     <item>
-     <widget class="WSatellitesView" name="graphicsView"/>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>0</height>
+       </size>
+      </property>
+      <widget class="QWidget" name="pageSatellites">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="WSatellitesView" name="graphicsView"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pageLocation"/>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -97,7 +133,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>777</width>
+     <width>685</width>
      <height>19</height>
     </rect>
    </property>

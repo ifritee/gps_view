@@ -7,6 +7,7 @@ namespace Ui {
 }
 
 class QTimer;
+class QButtonGroup;
 class QSerialPort;
 class DSettings;
 class DHelpAbout;
@@ -27,12 +28,20 @@ public:
   virtual ~MainWindow();
 
 private:
+  /**
+   * @enum EVIEWCONTROLS
+   * @brief Controls view window */
+  enum class EVIEWCONTROLS {
+    SATELLITES ///< @brief Satellites view window
+  , LOCATION  ///< @brief Location view window
+  };
   Ui::MainWindow *ui; ///< @brief GUI view
   QTimer * _Timer_po; ///< @brief Timer read data
   QSerialPort * _SerialPort_po; ///< @brief RS232 port
   QByteArray _ReciveData_o; ///< @brief Recived data
   DSettings * _Settings_po; ///< @brief Settings dialog
   DHelpAbout * _HelpAbout_po; ///< @brief Help window "About..."
+  QButtonGroup * _ControlView_po; ///< @brief Buttons of view control
 
 protected:
   /** @brief widget show */

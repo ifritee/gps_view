@@ -1,6 +1,8 @@
 #include "MainWindow.h"
 
 #include <QTimer>
+#include <QButtonGroup>
+#include <QPushButton>
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QDebug>
@@ -17,8 +19,20 @@ MainWindow::MainWindow(QWidget *parent)
   , _SerialPort_po(new QSerialPort)
   , _Settings_po(new DSettings(this))
   , _HelpAbout_po(new DHelpAbout(this))
+  , _ControlView_po (new QButtonGroup(this))
 {
   ui->setupUi(this);
+
+  QPushButton * satellitesView = new QPushButton(this);
+  satellitesView->setFixedSize(24, 24);
+  satellitesView->setCheckable(true);
+  satellitesView->setChecked(true);
+  QPushButton * lacationView = new QPushButton(this);
+  lacationView->setFixedSize(24, 24);
+  lacationView->setCheckable(true);
+  _ControlView_po->addButton(satellitesView, static_cast<int>(EVIEWCONTROLS::SATELLITES));
+  _ControlView_po->addButton(lacationView, static_cast<int>(EVIEWCONTROLS::LOCATION));
+  _ControlView_po->setExclusive(true);
 
   connect(_SerialPort_po, &QSerialPort::readyRead, this, &MainWindow::ReadNMEA_slt);
   connect(ui->actionSettings, &QAction::triggered, [this](){ _Settings_po->exec(); });
@@ -26,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
   connect(ui->actionSave_settings, &QAction::triggered, _Settings_po, &DSettings::Save_slt);
   connect(ui->actionLoad_settings, &QAction::triggered, _Settings_po, &DSettings::Load_slt);
   connect(ui->actionExit, &QAction::triggered, [this](){ qApp->quit();});
+  connect(_ControlView_po, &QButtonGroup::idClicked, ui->stackedWidget, &QStackedWidget::setCurrentIndex);
 }
 
 MainWindow::~MainWindow()
@@ -36,6 +51,10 @@ MainWindow::~MainWindow()
   delete _SerialPort_po;
   delete _Settings_po;
   delete _HelpAbout_po;
+  for(auto * button : _ControlView_po->buttons()) {
+    delete button;
+  }
+  delete _ControlView_po;
 }
 
 void MainWindow::showEvent(QShowEvent *event)
@@ -44,6 +63,12 @@ void MainWindow::showEvent(QShowEvent *event)
   if (!_SerialPort_po->isOpen()) {
     StartGPS_slt();
   }
+  QTimer::singleShot(500, [this]() {
+    QAbstractButton * sat = _ControlView_po->button(static_cast<int>(EVIEWCONTROLS::SATELLITES));
+    QAbstractButton * loc = _ControlView_po->button(static_cast<int>(EVIEWCONTROLS::LOCATION));
+    sat->move(ui->frame->width() + 8, ui->menubar->height() + 2);
+    loc->move(ui->frame->width() + sat->width() + 8, ui->menubar->height() + 2);
+  });
 }
 
 void MainWindow::StartGPS_slt()
