@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>icon.png</file>
+        <file>img/icon.png</file>
+        <file>ui/WMapLocation.qml</file>
+        <file>ui/WMapLocationForm.ui.qml</file>
     </qresource>
 </RCC>

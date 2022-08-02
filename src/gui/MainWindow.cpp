@@ -23,16 +23,18 @@ MainWindow::MainWindow(QWidget *parent)
 {
   ui->setupUi(this);
 
-  QPushButton * satellitesView = new QPushButton(this);
+  QPushButton * satellitesView = new QPushButton("S", this);
   satellitesView->setFixedSize(24, 24);
   satellitesView->setCheckable(true);
   satellitesView->setChecked(true);
-  QPushButton * lacationView = new QPushButton(this);
+  QPushButton * lacationView = new QPushButton("M", this);
   lacationView->setFixedSize(24, 24);
   lacationView->setCheckable(true);
   _ControlView_po->addButton(satellitesView, static_cast<int>(EVIEWCONTROLS::SATELLITES));
   _ControlView_po->addButton(lacationView, static_cast<int>(EVIEWCONTROLS::LOCATION));
   _ControlView_po->setExclusive(true);
+  ui->statusbar->addPermanentWidget(satellitesView);
+  ui->statusbar->addPermanentWidget(lacationView);
 
   connect(_SerialPort_po, &QSerialPort::readyRead, this, &MainWindow::ReadNMEA_slt);
   connect(ui->actionSettings, &QAction::triggered, [this](){ _Settings_po->exec(); });
@@ -63,12 +65,12 @@ void MainWindow::showEvent(QShowEvent *event)
   if (!_SerialPort_po->isOpen()) {
     StartGPS_slt();
   }
-  QTimer::singleShot(500, [this]() {
-    QAbstractButton * sat = _ControlView_po->button(static_cast<int>(EVIEWCONTROLS::SATELLITES));
-    QAbstractButton * loc = _ControlView_po->button(static_cast<int>(EVIEWCONTROLS::LOCATION));
-    sat->move(ui->frame->width() + 8, ui->menubar->height() + 2);
-    loc->move(ui->frame->width() + sat->width() + 8, ui->menubar->height() + 2);
-  });
+//  QTimer::singleShot(500, [this]() {
+//    QAbstractButton * sat = _ControlView_po->button(static_cast<int>(EVIEWCONTROLS::SATELLITES));
+//    QAbstractButton * loc = _ControlView_po->button(static_cast<int>(EVIEWCONTROLS::LOCATION));
+//    sat->move(ui->frame->width() + 8, ui->menubar->height() + 2);
+//    loc->move(ui->frame->width() + sat->width() + 8, ui->menubar->height() + 2);
+//  });
 }
 
 void MainWindow::StartGPS_slt()

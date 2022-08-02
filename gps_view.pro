@@ -1,4 +1,4 @@
-QT       += core serialport gui widgets positioning
+QT       += core serialport gui widgets positioning location
 
 TEMPLATE = app
 CONFIG += console c++17
@@ -12,6 +12,7 @@ SOURCES += \
         src/gui/MainWindow.cpp \
         src/gui/USatelliteItem.cpp \
         src/gui/WGeneralData.cpp \
+        src/gui/WMapLocation.cpp \
         src/gui/WSatellitesView.cpp \
         src/main.cpp \
         src/parser/ANMEAString.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
   src/gui/MainWindow.h \
   src/gui/USatelliteItem.h \
   src/gui/WGeneralData.h \
+  src/gui/WMapLocation.h \
   src/gui/WSatellitesView.h \
   src/parser/ANMEAString.h \
   src/parser/UNMEADHVString.h \

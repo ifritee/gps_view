@@ -123,7 +123,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="pageLocation"/>
+      <widget class="WMapLocation" name="pageLocation"/>
      </widget>
     </item>
    </layout>
@@ -199,6 +199,12 @@
    <class>WGeneralData</class>
    <extends>QWidget</extends>
    <header>WGeneralData.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WMapLocation</class>
+   <extends>QWidget</extends>
+   <header>WMapLocation.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
