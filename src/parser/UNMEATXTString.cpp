@@ -50,7 +50,7 @@ QString UNMEATXTString::text() const
 QDebug operator<<(QDebug debugObject, const UNMEATXTString & data)
 {
   debugObject.nospace()
-    << "UNMEAGGAString" << " ("
+    << "UNMEATXTString" << " ("
     << data.stringsQty() << ", "
     << data.stringsNumber() << ", "
     << static_cast<int>(data.messageType()) << ", "

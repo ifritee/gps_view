@@ -73,7 +73,7 @@ UNMEAVTGString::ECALCMETHOD UNMEAVTGString::calcMethod() const
 QDebug operator<<(QDebug debugObject, const UNMEAVTGString & data)
 {
   debugObject.nospace()
-    << "UNMEAGGAString" << " ("
+    << "UNMEAVTGString" << " ("
     << data.course() << ", "
     << data.isValid() << ", "
     << data.magneticCourse() << ", "

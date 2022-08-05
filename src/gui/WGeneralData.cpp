@@ -6,6 +6,7 @@
 #include <QDebug>
 
 #include "UNMEAZDAString.h"
+#include "UNMEARMCString.h"
 #include "UNMEAGGAString.h"
 #include "ui_WGeneralData.h"
 
@@ -33,6 +34,10 @@ void WGeneralData::setViewData_v(ANMEAString * data)
     UNMEAGGAString * gga = dynamic_cast<UNMEAGGAString *>(data);
     if (!gga) { qWarning()<<"Not GGA by type is GGA"; }
     else { viewGGAData(*gga); }
+  } else if (data->nmeaDataType_en() == ENMEADATATYPE::RMC) {
+    UNMEARMCString * rmc = dynamic_cast<UNMEARMCString *>(data);
+    if (!rmc) { qWarning()<<"Not RMC by type is RMC"; }
+    else { viewRMCData(*rmc); }
   }
 }
 
@@ -42,6 +47,13 @@ void WGeneralData::viewZDAData(const UNMEAZDAString & zda)
   *_TimeZone_po = QTimeZone(zda.zoneHours() * 3600 + zda.zoneMinuts() * 60);
   if (zda.date().isValid()) {
     ui->date->setText(zda.date().toString("dd-MM-yyyy"));
+  }
+}
+
+void WGeneralData::viewRMCData(const UNMEARMCString & rmc)
+{
+  if (rmc.isValid()) {
+    ui->date->setText(rmc.date().toString("dd-MM-yyyy"));
   }
 }
 
@@ -56,6 +68,7 @@ void WGeneralData::viewGGAData(const UNMEAGGAString & gga)
     if (list.size() == 2) {
       ui->latitude->setText(list[0]);
       ui->longitude->setText(list[1]);
+      ui->altitude->setText(QString::number(gga.altitude()));
     }
   }
 }

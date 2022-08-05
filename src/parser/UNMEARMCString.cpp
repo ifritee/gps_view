@@ -36,24 +36,27 @@ UNMEARMCString::~UNMEARMCString()
 void UNMEARMCString::parsing()
 {
   QStringList NMEAData_lst = _NMEAText_pstr->split(",");
-  if (NMEAData_lst.size() >= 14) {
+  if (NMEAData_lst.size() >= 13) {
     *_UTCTime_po = QTime::fromString(NMEAData_lst[1], "HHmmss.zzz");
     _IsValid_b = (NMEAData_lst[2] == "A");
     _Coordinates_po->setLatitude(FCalculate::latitudeFromStr(NMEAData_lst[3], NMEAData_lst[4]));
     _Coordinates_po->setLongitude(FCalculate::longitudeFromStr(NMEAData_lst[5], NMEAData_lst[6]));
     _Speed_d = NMEAData_lst[7].toDouble();
     _Course_d = NMEAData_lst[8].toDouble();
-    *_Date_po = QDate::fromString(NMEAData_lst[9], "ddMMyy");
+    if (NMEAData_lst[9].size() == 6) {
+      QString date = NMEAData_lst[9].left(4) + "20" + NMEAData_lst[9].right(2);
+      *_Date_po = QDate::fromString(date, "ddMMyyyy");
+    }
     _MagneticVariation_d = NMEAData_lst[10].toDouble();
     _IsDirectionWest_b = (NMEAData_lst[11] == "W");
     if (_CalcMethodDict_map.find(NMEAData_lst[12]) != _CalcMethodDict_map.end()) {
       _CalcMethod_en = _CalcMethodDict_map[ NMEAData_lst[12] ];
     }
-    if (_Status_map.find(NMEAData_lst[13]) != _Status_map.end()) {
+    if (NMEAData_lst.size() >= 14 && _Status_map.find(NMEAData_lst[13]) != _Status_map.end()) {
       _Status_en = _Status_map[ NMEAData_lst[13] ];
     }
+    qDebug()<<*this;
   }
-  qDebug()<<*this;
 }
 
 const QTime &UNMEARMCString::utcTime() const
@@ -109,7 +112,7 @@ UNMEARMCString::ENAVIGATIONSTATUS UNMEARMCString::status() const
 QDebug operator<<(QDebug debugObject, const UNMEARMCString & data)
 {
   debugObject.nospace()
-    << "UNMEAGGAString" << " ("
+    << "UNMEARMCString" << " ("
     << data.utcTime() << ", "
     << data.isValid() << ", "
     << data.coordinates() << ", "

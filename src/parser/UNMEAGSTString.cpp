@@ -74,7 +74,7 @@ qreal UNMEAGSTString::errorAltitude() const
 QDebug operator<<(QDebug debugObject, const UNMEAGSTString & data)
 {
   debugObject.nospace()
-    << "UNMEAGGAString" << " ("
+    << "UNMEAGSTString" << " ("
     << data.utcTime() << ", "
     << data.rms() << ", "
     << data.errorSemiMajor() << ", "

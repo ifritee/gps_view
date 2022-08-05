@@ -4,6 +4,9 @@
 #include <QQuickView>
 #include <QQmlContext>
 #include <QVBoxLayout>
+#include <QGeoCoordinate>
+
+#include "UNMEAGGAString.h"
 
 WMapLocation::WMapLocation(QWidget *parent)
   : QWidget(parent)
@@ -25,4 +28,15 @@ WMapLocation::WMapLocation(QWidget *parent)
 WMapLocation::~WMapLocation()
 {
   delete _View_po;
+}
+
+void WMapLocation::setViewData_v(ANMEAString * data)
+{
+  if (data->nmeaDataType_en() == ENMEADATATYPE::GGA) {
+    UNMEAGGAString * gga = dynamic_cast<UNMEAGGAString *>(data);
+    if (!gga) { qWarning()<<"Not GGA by type is GGA"; }
+    else if (gga->coordinates().isValid()) {
+      emit position(gga->coordinates());
+    }
+  }
 }

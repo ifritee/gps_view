@@ -115,6 +115,7 @@ void MainWindow::ReadNMEA_slt()
     if (data) {
       ui->graphicsView->setViewData_v(data);
       ui->generalData->setViewData_v(data);
+      ui->pageLocation->setViewData_v(data);
     }
     _ReciveData_o.clear();
   }

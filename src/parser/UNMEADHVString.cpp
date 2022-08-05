@@ -55,7 +55,7 @@ qreal UNMEADHVString::speed() const
 QDebug operator<<(QDebug debugObject, const UNMEADHVString & data)
 {
   debugObject.nospace()
-    << "UNMEAGGAString" << " ("
+    << "UNMEADHVString" << " ("
     << data.utcTime() << ", "
     << data.speed3D() << ", "
     << data.speedECEF() << ", "

@@ -53,7 +53,7 @@ qint32 UNMEAZDAString::zoneMinuts() const
 QDebug operator<<(QDebug debugObject, const UNMEAZDAString & data)
 {
   debugObject.nospace()
-    << "UNMEAGGAString" << " ("
+    << "UNMEAZDAString" << " ("
     << data.utcTime() << ", "
     << data.date() << ", "
     << data.zoneHours() << ", "

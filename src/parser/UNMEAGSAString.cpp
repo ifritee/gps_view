@@ -72,7 +72,7 @@ ESATELLITETYPE UNMEAGSAString::naviType() const
 QDebug operator<<(QDebug debugObject, const UNMEAGSAString & data)
 {
   debugObject.nospace()
-    << "UNMEAGGAString" << " ("
+    << "UNMEAGSAString" << " ("
     << data.isAuto() << ", "
     << static_cast<int>(data.format()) << ", "
     << data.satellitesID() << ", "

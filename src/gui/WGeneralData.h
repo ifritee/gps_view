@@ -5,6 +5,7 @@
 class QTimeZone;
 class ANMEAString;
 class UNMEAZDAString;
+class UNMEARMCString;
 class UNMEAGGAString;
 
 namespace Ui {
@@ -34,6 +35,8 @@ private:
 
   /** @brief view ZDA (date and time) data */
   void viewZDAData(const UNMEAZDAString &);
+  /** @brief view RMC (date and time) data */
+  void viewRMCData(const UNMEARMCString &);
   /** @brief view GGA (date and time) data */
   void viewGGAData(const UNMEAGGAString &);
 };

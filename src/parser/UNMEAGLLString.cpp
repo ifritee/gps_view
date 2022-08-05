@@ -65,7 +65,7 @@ UNMEAGLLString::ECALCMETHOD UNMEAGLLString::calcMethod() const
 QDebug operator<<(QDebug debugObject, const UNMEAGLLString & data)
 {
   debugObject.nospace()
-    << "UNMEAGGAString" << " ("
+    << "UNMEAGLLString" << " ("
     << data.coordinates() << ", "
     << data.utcTime() << ", "
     << data.isReliability() << ", "
